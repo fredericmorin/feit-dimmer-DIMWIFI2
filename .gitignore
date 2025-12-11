@@ -1,0 +1,6 @@
+hid_download_py
+.venv
+download
+.esphome
+secrets.yaml
+generic-firmware.bin*

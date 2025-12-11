@@ -1,0 +1,117 @@
+esphome:
+  name: feit-dimwifi2
+  name_add_mac_suffix: true
+  friendly_name: "Feit DIMWIFI2"
+bk72xx:
+  board: generic-bk7231n-qfn32-tuya
+api: {"reboot_timeout": "0s", "encryption": {"key": !secret api_encryption_key}}
+ota: {"platform": "esphome", "password": !secret ota_password}
+wifi:
+  output_power: 12.5dB
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "feitdimmer"
+    password: !secret wifi_ap_password
+web_server:
+captive_portal:
+
+logger:
+  baud_rate: 0
+  # level: verbose
+uart:
+  rx_pin: RX1
+  tx_pin: TX1
+  baud_rate: 9600
+
+button:
+  - platform: restart
+    name: Restart
+
+debug:
+  update_interval: 30s
+
+text_sensor:
+  - platform: debug
+    reset_reason:
+      name: Reset Reason
+  - platform: version
+    name: "ESPHome Version"
+    # hide_timestamp: true
+
+sensor:
+  - platform: uptime
+    name: Uptime
+    disabled_by_default: true
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+binary_sensor:
+  - platform: status
+    name: "Status"
+
+tuya:
+  # DPIDs processed from schema model: 000003w4ro
+
+light:
+  - platform: tuya
+    name: Dimmer
+    restore_mode: RESTORE_DEFAULT_OFF
+    switch_datapoint: 1
+    dimmer_datapoint: 2
+    min_value: 0
+    max_value: 1000
+
+number:
+  - platform: tuya
+    number_datapoint: 3
+    name: Brightness Min
+    min_value: 10
+    max_value: 2000
+    step: 1
+    entity_category: config
+  # - platform: tuya
+  #   number_datapoint: 5
+  #   name: Brightness Max
+  #   min_value: 10
+  #   max_value: 2000
+  #   step: 1
+  # entity_category: config
+  # - platform: tuya
+  #   number_datapoint: 6
+  #   name: Countdown
+  #   unit_of_measurement: s
+  #   min_value: 0
+  #   max_value: 86400
+  #   step: 1
+  # entity_category: config
+
+select:
+  - platform: tuya
+    enum_datapoint: 4
+    name: Led Type
+    optimistic: true
+    options:
+      0: Led
+      1: Incandescent
+      2: Halogen
+    entity_category: config
+  - platform: tuya
+    enum_datapoint: 101
+    name: Switch LED Brightness
+    optimistic: true
+    options:
+      0: "Off"
+      1: Low
+      2: High
+    entity_category: config
+  - platform: tuya
+    enum_datapoint: 102
+    name:  On Control
+    optimistic: true
+    options:
+      0: Gradual
+      1: Instant
+      2: Switch
+    entity_category: config
