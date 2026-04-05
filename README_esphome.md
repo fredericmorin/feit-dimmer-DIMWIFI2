@@ -7,6 +7,12 @@ Product code: DIMSMART
 
 FCC ID: SYW-DIMSMART
 
+## Project setup
+
+```sh
+uv sync --upgrade
+```
+
 ## Flash Procedure
 
 1. Hardware tear down
@@ -27,6 +33,6 @@ FCC ID: SYW-DIMSMART
       5. Uart 3v3 -> dimmer 3v3
       6. Uart GND -> dimmer CEN (do not connect yet)
    2. Short pin NRST to GND for the entire duration of the flashing process
-   3. Run `esphome run generic.yaml`
+   3. Run `uv run esphome run generic.yaml`
    4. While esphome is trying to establish communication with the the bk7231, reboot the uC by momentarily connecting CEN to GND
    5. Device should now flash and reboot
