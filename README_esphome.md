@@ -10,10 +10,10 @@ FCC ID: SYW-DIMSMART
 ## Project setup
 
 ```sh
-uv sync --upgrade
+uvx esphome compile generic.yaml
 ```
 
-## Flash Procedure
+## Convertion Procedure
 
 1. Hardware tear down
    1. Disassemble device down to bare control PCB
@@ -33,6 +33,25 @@ uv sync --upgrade
       5. Uart 3v3 -> dimmer 3v3
       6. Uart GND -> dimmer CEN (do not connect yet)
    2. Short pin NRST to GND for the entire duration of the flashing process
-   3. Run `uv run esphome run generic.yaml`
+   3. Run `uvx esphome run generic.yaml`
    4. While esphome is trying to establish communication with the the bk7231, reboot the uC by momentarily connecting CEN to GND
    5. Device should now flash and reboot
+
+## Update procedure
+
+### Dimmer is connected to wifi
+
+1. Find device ip
+2. `uvx esphome run generic.yaml --device 10.2.1.x`
+
+
+### `feitdimmer` SSID
+
+Happens if the device is unconfigured or can't connect to an ap.
+
+1. Build `.bin` firmware with `./build_esphome_bin.sh`
+2. Power cycle switch using tab below switch paddle
+3. Wait for device to expose SSID `feitdimmer`.
+4. Connect to `feitdimmer` SSID
+5. Navigate to http://192.168.4.1/
+6. Upload `generic-firmware.bin.gz`

@@ -4,8 +4,12 @@ esphome:
   friendly_name: "Feit DIMWIFI2"
 bk72xx:
   board: generic-bk7231n-qfn32-tuya
-api: {"reboot_timeout": "0s", "encryption": {"key": !secret api_encryption_key}}
-ota: {"platform": "esphome", "password": !secret ota_password}
+api:
+  {
+    "reboot_timeout": "0s",
+    "encryption": { "key": !secret api_encryption_key },
+  }
+ota: { "platform": "esphome", "password": !secret ota_password }
 wifi:
   output_power: 12.5dB
   ssid: !secret wifi_ssid
@@ -24,32 +28,32 @@ uart:
   tx_pin: TX1
   baud_rate: 9600
 
-button:
-  - platform: restart
-    name: Restart
+# button:
+#   - platform: restart
+#     name: Restart
 
-debug:
-  update_interval: 30s
+# debug:
+#   update_interval: 30s
 
 text_sensor:
-  - platform: debug
-    reset_reason:
-      name: Reset Reason
+  # - platform: debug
+  #   reset_reason:
+  #     name: Reset Reason
   - platform: version
     name: "ESPHome Version"
-    # hide_timestamp: true
+    hide_timestamp: true
 
-sensor:
-  - platform: uptime
-    name: Uptime
-    disabled_by_default: true
-  - platform: wifi_signal
-    name: "WiFi Signal"
-    update_interval: 60s
+# sensor:
+#   - platform: uptime
+#     name: Uptime
+#     disabled_by_default: true
+#   - platform: wifi_signal
+#     name: "WiFi Signal"
+#     update_interval: 60s
 
-binary_sensor:
-  - platform: status
-    name: "Status"
+# binary_sensor:
+#   - platform: status
+#     name: "Status"
 
 tuya:
   # DPIDs processed from schema model: 000003w4ro
@@ -108,7 +112,7 @@ select:
     entity_category: config
   - platform: tuya
     enum_datapoint: 102
-    name:  On Control
+    name: On Control
     optimistic: true
     options:
       0: Gradual
